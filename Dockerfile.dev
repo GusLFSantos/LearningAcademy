@@ -1,0 +1,32 @@
+# Development image for LearningAcademy.
+# Production deploys use the generated ./Dockerfile (Kamal); this one is for
+# local development via docker-compose with the source bind-mounted in.
+FROM ruby:3.3
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    BUNDLE_PATH=/usr/local/bundle
+
+# System packages: build toolchain + Postgres client headers (for the pg gem)
+# + git. No Node needed (importmap for JS, tailwindcss-rails standalone CLI).
+RUN apt-get update -qq \
+    && apt-get install -y --no-install-recommends \
+       build-essential \
+       libpq-dev \
+       postgresql-client \
+       git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install gems first so the layer is cached unless the Gemfile changes.
+# (In compose, /usr/local/bundle is a named volume seeded from this layer.)
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+# App source is bind-mounted over /app in development; this COPY makes the
+# image usable on its own too.
+COPY . .
+
+EXPOSE 3000
+
+CMD ["bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]

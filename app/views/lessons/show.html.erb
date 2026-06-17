@@ -1,0 +1,58 @@
+<% content_for :title, "#{@lesson.title} · #{@course.title}" %>
+
+<div class="max-w-3xl mx-auto">
+  <div class="flex items-center justify-between">
+    <%= link_to "← #{@course.title}", course_path(@course),
+          class: "text-sm text-gray-500 hover:text-indigo-600" %>
+    <%# TODO: authorize — author-only controls %>
+    <%= link_to "Edit lesson", edit_course_lesson_path(@course, @lesson), class: "text-sm text-indigo-600 hover:underline" %>
+  </div>
+
+  <header class="mt-3 mb-6 flex items-start justify-between gap-4">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight"><%= @lesson.title %></h1>
+      <p class="text-sm text-gray-400 mt-1">⏱️ ≈ <%= @lesson.estimated_minutes %> min read</p>
+    </div>
+    <% if @completed %>
+      <span class="inline-flex items-center gap-1 rounded-full bg-green-100 text-green-700 px-3 py-1 text-sm font-medium">
+        ✓ Completed
+      </span>
+    <% end %>
+  </header>
+
+  <%# Active-time tracking + mermaid rendering both scope to this article. %>
+  <article class="markdown-body"
+           data-controller="mermaid time-tracker"
+           data-time-tracker-url-value="<%= course_lesson_time_logs_path(@course, @lesson) %>">
+    <%= markdown(@lesson.body) %>
+  </article>
+
+  <!-- Quiz CTA -->
+  <div class="mt-10 border-t border-gray-200 pt-6">
+    <% if @quiz %>
+      <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-5 flex items-center justify-between gap-4">
+        <div>
+          <h2 class="font-semibold">Check your understanding</h2>
+          <p class="text-sm text-gray-600">Pass the quiz to complete this lesson.</p>
+        </div>
+        <%= link_to (@completed ? "Retake quiz" : "Take the quiz"),
+              course_lesson_quiz_path(@course, @lesson),
+              class: "inline-flex justify-center rounded-lg bg-indigo-600 text-white text-sm font-medium px-5 py-2.5 hover:bg-indigo-700 whitespace-nowrap" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Prev / next -->
+  <nav class="mt-8 flex items-center justify-between text-sm">
+    <% if (prev = @lesson.previous_lesson) %>
+      <%= link_to "← #{prev.title}", course_lesson_path(@course, prev), class: "text-indigo-600 hover:underline" %>
+    <% else %>
+      <span></span>
+    <% end %>
+    <% if (nxt = @lesson.next_lesson) %>
+      <%= link_to "#{nxt.title} →", course_lesson_path(@course, nxt), class: "text-indigo-600 hover:underline" %>
+    <% else %>
+      <span></span>
+    <% end %>
+  </nav>
+</div>

@@ -1,0 +1,70 @@
+<% content_for :title, "Edit Quiz · #{@lesson.title}" %>
+
+<div class="max-w-2xl mx-auto">
+  <%= link_to "← #{@lesson.title}", course_lesson_path(@course, @lesson),
+        class: "text-sm text-gray-500 hover:text-indigo-600" %>
+  <h1 class="text-2xl font-bold mt-3 mb-1">Edit Quiz</h1>
+  <p class="text-gray-500 text-sm mb-6">
+    Add questions and mark the correct option(s). Blank rows are ignored; save again to add more.
+  </p>
+
+  <%= form_with model: @quiz, url: course_lesson_quiz_path(@course, @lesson), method: :patch do |f| %>
+    <%= render "shared/errors", record: @quiz %>
+
+    <div class="grid sm:grid-cols-2 gap-4 mb-6">
+      <div>
+        <%= f.label :title, class: "block text-sm font-medium mb-1" %>
+        <%= f.text_field :title, class: "w-full rounded-lg border border-gray-300 p-2.5" %>
+      </div>
+      <div>
+        <%= f.label :pass_percentage, "Pass %", class: "block text-sm font-medium mb-1" %>
+        <%= f.number_field :pass_percentage, min: 0, max: 100, class: "w-full rounded-lg border border-gray-300 p-2.5" %>
+      </div>
+    </div>
+
+    <div class="space-y-5">
+      <%= f.fields_for :questions do |qf| %>
+        <div class="bg-white border border-gray-200 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <div class="flex-1">
+              <%= qf.label :prompt, "Question", class: "block text-sm font-medium mb-1" %>
+              <%= qf.text_field :prompt, placeholder: "Question prompt",
+                    class: "w-full rounded-lg border border-gray-300 p-2.5" %>
+            </div>
+            <div class="w-20">
+              <%= qf.label :position, "Order", class: "block text-sm font-medium mb-1" %>
+              <%= qf.number_field :position, value: qf.object.position || 0, class: "w-full rounded-lg border border-gray-300 p-2.5" %>
+            </div>
+          </div>
+
+          <div class="mt-3 space-y-2">
+            <p class="text-xs text-gray-400">Options (check the correct answer)</p>
+            <%= qf.fields_for :answer_options do |of| %>
+              <div class="flex items-center gap-2">
+                <%= of.check_box :correct, class: "rounded text-green-600" %>
+                <%= of.text_field :body, placeholder: "Answer option",
+                      class: "flex-1 rounded-lg border border-gray-300 p-2" %>
+                <% unless of.object.new_record? %>
+                  <label class="text-xs text-red-600 flex items-center gap-1">
+                    <%= of.check_box :_destroy %> remove
+                  </label>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+
+          <% unless qf.object.new_record? %>
+            <label class="inline-flex items-center gap-1 text-xs text-red-600 mt-3">
+              <%= qf.check_box :_destroy %> Remove this question
+            </label>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mt-6 flex items-center gap-3">
+      <%= f.submit "Save quiz", class: "rounded-lg bg-indigo-600 text-white text-sm font-medium px-5 py-2.5 hover:bg-indigo-700 cursor-pointer" %>
+      <%= link_to "Cancel", course_lesson_path(@course, @lesson), class: "text-sm text-gray-500 hover:underline" %>
+    </div>
+  <% end %>
+</div>

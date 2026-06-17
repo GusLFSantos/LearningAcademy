@@ -1,0 +1,32 @@
+<%= form_with model: [course, lesson] do |f| %>
+  <%= render "shared/errors", record: lesson %>
+
+  <div class="space-y-6">
+    <div>
+      <%= f.label :title, class: "block text-sm font-medium mb-1" %>
+      <%= f.text_field :title, class: "w-full rounded-lg border border-gray-300 p-2.5 focus:ring-indigo-500 focus:border-indigo-500" %>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div>
+        <%= f.label :position, "Order", class: "block text-sm font-medium mb-1" %>
+        <%= f.number_field :position, class: "w-full rounded-lg border border-gray-300 p-2.5" %>
+      </div>
+      <div>
+        <%= f.label :estimated_minutes, "Est. minutes", class: "block text-sm font-medium mb-1" %>
+        <%= f.number_field :estimated_minutes, min: 0, class: "w-full rounded-lg border border-gray-300 p-2.5" %>
+      </div>
+      <label class="inline-flex items-center gap-2 text-sm mt-7">
+        <%= f.check_box :published, class: "rounded text-indigo-600" %>
+        Published
+      </label>
+    </div>
+
+    <%= render "shared/markdown_editor", f: f, field: :body, label: "Lesson body (Markdown)" %>
+  </div>
+
+  <div class="mt-6 flex items-center gap-3">
+    <%= f.submit class: "rounded-lg bg-indigo-600 text-white text-sm font-medium px-5 py-2.5 hover:bg-indigo-700 cursor-pointer" %>
+    <%= link_to "Cancel", (lesson.persisted? ? course_lesson_path(course, lesson) : course_path(course)), class: "text-sm text-gray-500 hover:underline" %>
+  </div>
+<% end %>

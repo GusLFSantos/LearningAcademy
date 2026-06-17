@@ -1,0 +1,79 @@
+<% content_for :title, @course.title %>
+
+<div class="max-w-3xl mx-auto">
+  <div class="flex items-center justify-between">
+    <%= link_to "← Back to catalog", courses_path, class: "text-sm text-gray-500 hover:text-indigo-600" %>
+    <%# TODO: authorize — author-only controls %>
+    <%= link_to "Edit course", edit_course_path(@course), class: "text-sm text-indigo-600 hover:underline" %>
+  </div>
+
+  <div class="mt-4 flex items-start justify-between gap-4">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight"><%= @course.title %></h1>
+      <p class="text-gray-500 mt-1"><%= @course.summary %></p>
+    </div>
+    <%= render "courses/status_badge", status: @progress.status %>
+  </div>
+
+  <!-- Progress + time -->
+  <div class="mt-6 bg-white rounded-2xl border border-gray-200 p-5 space-y-4">
+    <%= render "courses/progress_bar", course: @course, progress: @progress %>
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-gray-500">
+      <span>⏱️ Estimated: ≈ <%= @progress.estimated_minutes %> min</span>
+      <span>🕒 Time spent: <%= humane_duration(@progress.time_spent_seconds) %></span>
+      <% if @course.badge %>
+        <span>
+          <%= @course.badge.icon %> Badge:
+          <% if @course.badge.earned_by?(current_user) %>
+            <span class="text-green-600 font-medium">Earned</span>
+          <% else %>
+            <span><%= @course.badge.name %></span>
+          <% end %>
+        </span>
+      <% end %>
+    </div>
+
+    <div class="pt-1">
+      <% if @enrollment %>
+        <%= button_to "Leave course", course_enrollment_path(@course), method: :delete,
+              class: "text-sm text-gray-500 hover:text-red-600 underline" %>
+      <% else %>
+        <%= button_to "Enroll in this course", course_enrollment_path(@course), method: :post,
+              class: "inline-flex justify-center rounded-lg bg-indigo-600 text-white text-sm font-medium px-4 py-2 hover:bg-indigo-700" %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <% if @course.description.present? %>
+    <div class="markdown-body mt-8" data-controller="mermaid"><%= markdown(@course.description) %></div>
+  <% end %>
+
+  <!-- Lessons -->
+  <div class="flex items-center justify-between mt-10 mb-3">
+    <h2 class="text-xl font-semibold">Lessons</h2>
+    <%= link_to "+ Add lesson", new_course_lesson_path(@course), class: "text-sm text-indigo-600 hover:underline" %>
+  </div>
+  <% if @lessons.any? %>
+    <ol class="space-y-2">
+      <% @lessons.each_with_index do |lesson, i| %>
+        <% done = lesson.completed_by?(current_user) %>
+        <li class="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-4">
+          <span class="flex-none w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium
+                       <%= done ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500' %>">
+            <%= done ? "✓" : i + 1 %>
+          </span>
+          <div class="flex-1 min-w-0">
+            <%= link_to lesson.title, course_lesson_path(@course, lesson),
+                  class: "font-medium hover:text-indigo-600" %>
+            <div class="text-xs text-gray-400">⏱️ ≈ <%= lesson.estimated_minutes %> min</div>
+          </div>
+          <%= link_to (done ? "Review" : "Start"), course_lesson_path(@course, lesson),
+                class: "text-sm text-indigo-600 hover:underline" %>
+        </li>
+      <% end %>
+    </ol>
+  <% else %>
+    <p class="text-gray-500">No lessons in this course yet.</p>
+  <% end %>
+</div>

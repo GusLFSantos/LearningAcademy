@@ -1,0 +1,12 @@
+<%#
+  Renders a progression status pill. Local: status (symbol/string).
+%>
+<% label, klass =
+     case status.to_sym
+     when :completed   then ["Completed",   "bg-green-100 text-green-700"]
+     when :in_progress then ["In progress",  "bg-amber-100 text-amber-700"]
+     else                   ["Not started",  "bg-gray-100 text-gray-600"]
+     end %>
+<span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium <%= klass %>">
+  <%= label %>
+</span>

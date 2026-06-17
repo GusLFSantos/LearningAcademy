@@ -1,0 +1,16 @@
+<% content_for :title, "Edit #{@lesson.title}" %>
+<div class="max-w-3xl mx-auto">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <%= link_to "← #{@lesson.title}", course_lesson_path(@course, @lesson), class: "text-sm text-gray-500 hover:text-indigo-600" %>
+      <h1 class="text-2xl font-bold mt-2">Edit Lesson</h1>
+    </div>
+    <div class="flex items-center gap-3">
+      <%= link_to "Edit quiz", edit_course_lesson_quiz_path(@course, @lesson), class: "text-sm text-indigo-600 hover:underline" %>
+      <%= button_to "Delete", course_lesson_path(@course, @lesson), method: :delete,
+            form: { data: { turbo_confirm: "Delete this lesson?" } },
+            class: "text-sm text-red-600 hover:underline" %>
+    </div>
+  </div>
+  <%= render "form", course: @course, lesson: @lesson %>
+</div>

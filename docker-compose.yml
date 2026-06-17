@@ -1,0 +1,65 @@
+# Local development stack for LearningAcademy.
+#   docker compose up        -> start db + web (http://localhost:3000)
+#   docker compose run web …  -> one-off rails/bundle commands
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: learning_academy_development
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bash -c "rm -f tmp/pids/server.pid && bin/rails db:prepare && bin/rails server -b 0.0.0.0 -p 3000"
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+  # Headless Chromium for `bin/rails test:system` (remote WebDriver).
+  selenium:
+    image: selenium/standalone-chromium:latest
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+
+  # Rebuilds app/assets/builds/tailwind.css whenever views/classes change.
+  css:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bin/rails tailwindcss:watch
+    environment:
+      RAILS_ENV: development
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    tty: true
+
+volumes:
+  pg_data:
+  bundle_cache:

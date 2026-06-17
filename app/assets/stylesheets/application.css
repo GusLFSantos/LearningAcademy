@@ -1,0 +1,88 @@
+/*
+ * Custom component styles served as-is by Propshaft (alongside the Tailwind
+ * build). Tailwind utility classes live in app/assets/tailwind/application.css.
+ *
+ * Contents:
+ *   1. .markdown-body  — typographic styling for rendered lesson/course Markdown
+ *   2. .highlight      — Rouge code-block syntax highlighting (GitHub-light)
+ *   3. .mermaid        — diagram container
+ */
+
+/* ------------------------------------------------------------------ */
+/* 1. Rendered Markdown                                                */
+/* ------------------------------------------------------------------ */
+.markdown-body {
+  color: #1f2937;
+  line-height: 1.7;
+}
+.markdown-body h1 { font-size: 1.75rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+.markdown-body h2 { font-size: 1.375rem; font-weight: 700; margin: 1.5rem 0 0.6rem; }
+.markdown-body h3 { font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+.markdown-body p { margin: 0.75rem 0; }
+.markdown-body ul { list-style: disc; padding-left: 1.5rem; margin: 0.75rem 0; }
+.markdown-body ol { list-style: decimal; padding-left: 1.5rem; margin: 0.75rem 0; }
+.markdown-body li { margin: 0.25rem 0; }
+.markdown-body a { color: #4f46e5; text-decoration: underline; }
+.markdown-body blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 1rem;
+  color: #6b7280;
+  margin: 1rem 0;
+}
+.markdown-body hr { border: 0; border-top: 1px solid #e5e7eb; margin: 1.5rem 0; }
+.markdown-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+.markdown-body th, .markdown-body td { border: 1px solid #e5e7eb; padding: 0.5rem 0.75rem; text-align: left; }
+.markdown-body th { background: #f9fafb; font-weight: 600; }
+
+/* Inline code (not inside a highlighted block) */
+.markdown-body :not(.highlight) > code {
+  background: #f3f4f6;
+  padding: 0.15em 0.4em;
+  border-radius: 0.3rem;
+  font-size: 0.875em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ------------------------------------------------------------------ */
+/* 2. Code blocks (Rouge)                                              */
+/* ------------------------------------------------------------------ */
+.highlight {
+  background: #f6f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+.highlight pre { margin: 0; padding: 1rem; }
+.highlight code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #24292e;
+}
+
+/* GitHub-light token colors */
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs, .highlight .cp { color: #6a737d; font-style: italic; }
+.highlight .k, .highlight .kc, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt { color: #d73a49; }
+.highlight .o, .highlight .ow { color: #d73a49; }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd,
+.highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .ss { color: #032f62; }
+.highlight .m, .highlight .mi, .highlight .mf, .highlight .mo, .highlight .mh, .highlight .mb, .highlight .il { color: #005cc5; }
+.highlight .nf, .highlight .na, .highlight .nc, .highlight .nn { color: #6f42c1; }
+.highlight .no, .highlight .nb, .highlight .bp { color: #005cc5; }
+.highlight .nt { color: #22863a; }
+.highlight .nv, .highlight .vi, .highlight .vg, .highlight .vc { color: #e36209; }
+.highlight .p { color: #24292e; }
+.highlight .err { color: #b31d28; background: #ffeef0; }
+.highlight .gd { color: #b31d28; background: #ffeef0; }
+.highlight .gi { color: #22863a; background: #f0fff4; }
+
+/* ------------------------------------------------------------------ */
+/* 3. Mermaid diagrams                                                 */
+/* ------------------------------------------------------------------ */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem 0;
+  background: transparent;
+}
