@@ -50,7 +50,7 @@ class QuizzesController < ApplicationController
       :title, :pass_percentage,
       questions_attributes: [
         :id, :prompt, :position, :_destroy,
-        answer_options_attributes: [:id, :body, :correct, :position, :_destroy]
+        answer_options_attributes: [ :id, :body, :correct, :position, :_destroy ]
       ]
     )
   end

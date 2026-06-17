@@ -33,7 +33,7 @@ class LearningFlowTest < ActionDispatch::IntegrationTest
     assert_not @l1.completed_by?(@user)
 
     # Pass both quizzes
-    [@l1, @l2].each do |lesson|
+    [ @l1, @l2 ].each do |lesson|
       post course_lesson_quiz_attempts_path(@course, lesson),
            params: { answers: correct_answers_for(lesson.quiz), started_at: 10.seconds.ago.iso8601 }
       assert_response :redirect
@@ -52,7 +52,7 @@ class LearningFlowTest < ActionDispatch::IntegrationTest
 
   test "course progress reaches 100 percent after completing lessons" do
     post course_enrollment_path(@course)
-    [@l1, @l2].each do |lesson|
+    [ @l1, @l2 ].each do |lesson|
       post course_lesson_quiz_attempts_path(@course, lesson),
            params: { answers: correct_answers_for(lesson.quiz) }
     end

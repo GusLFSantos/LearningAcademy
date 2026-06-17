@@ -7,6 +7,6 @@ class CreateBadgeAwards < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-    add_index :badge_awards, [:user_id, :badge_id], unique: true
+    add_index :badge_awards, [ :user_id, :badge_id ], unique: true
   end
 end
