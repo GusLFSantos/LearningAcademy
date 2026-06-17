@@ -1,6 +1,6 @@
 class LessonsController < ApplicationController
   before_action :set_course
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy]
+  before_action :set_lesson, only: [ :show, :edit, :update, :destroy ]
 
   def show
     @quiz = @lesson.quiz

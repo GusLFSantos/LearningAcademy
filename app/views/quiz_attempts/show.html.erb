@@ -2,28 +2,28 @@
 <% passed = @attempt.passed %>
 
 <div class="max-w-2xl mx-auto">
-  <div class="rounded-2xl p-6 mb-6 <%= passed ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200' %>">
+  <div class="rounded-2xl p-6 mb-6 <%= passed ? 'bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800' : 'bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800' %>">
     <div class="flex items-center justify-between gap-4">
       <div>
-        <h1 class="text-2xl font-bold <%= passed ? 'text-green-800' : 'text-red-800' %>">
+        <h1 class="text-2xl font-bold <%= passed ? 'text-emerald-800 dark:text-emerald-300' : 'text-red-800 dark:text-red-300' %>">
           <%= passed ? "Passed! 🎉" : "Not quite yet" %>
         </h1>
-        <p class="text-sm mt-1 <%= passed ? 'text-green-700' : 'text-red-700' %>">
+        <p class="text-sm mt-1 <%= passed ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-700 dark:text-red-400' %>">
           You scored <%= @attempt.score %>% (needed <%= @quiz.pass_percentage %>%).
           <% if @attempt.duration_seconds %>
             · Completed in <%= clock_duration(@attempt.duration_seconds) %>
           <% end %>
         </p>
       </div>
-      <div class="text-4xl font-bold <%= passed ? 'text-green-600' : 'text-red-500' %>">
+      <div class="text-4xl font-bold <%= passed ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500 dark:text-red-400' %>">
         <%= @attempt.score %>%
       </div>
     </div>
   </div>
 
   <% if passed %>
-    <div class="mb-6 bg-white rounded-xl border border-gray-200 p-4">
-      <p class="text-sm text-gray-500 mb-2">Course progress</p>
+    <div class="mb-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">Course progress</p>
       <%= render "courses/progress_bar", course: @course, progress: @progress %>
     </div>
   <% end %>
@@ -32,15 +32,17 @@
     <% @questions.each_with_index do |question, qi| %>
       <% chosen = @chosen_by_question[question.id]&.answer_option %>
       <% right = chosen&.correct? %>
-      <li class="bg-white rounded-xl border <%= right ? 'border-green-200' : 'border-red-200' %> p-5">
+      <li class="bg-white dark:bg-slate-900 rounded-xl border <%= right ? 'border-emerald-200 dark:border-emerald-800' : 'border-red-200 dark:border-red-800' %> p-5">
         <p class="font-medium mb-2">
-          <span class="text-gray-400 mr-1"><%= qi + 1 %>.</span><%= question.prompt %>
+          <span class="text-slate-400 dark:text-slate-500 mr-1"><%= qi + 1 %>.</span><%= question.prompt %>
         </p>
-        <p class="text-sm <%= right ? 'text-green-700' : 'text-red-700' %>">
+        <p class="text-sm <%= right ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-700 dark:text-red-400' %>">
           <%= right ? "✓" : "✗" %> Your answer: <%= chosen&.body || "(no answer)" %>
         </p>
         <% unless right %>
-          <p class="text-sm text-green-700 mt-1">Correct answer: <%= question.correct_option&.body %></p>
+          <p class="text-sm text-emerald-700 dark:text-emerald-400 mt-1">
+            Correct answer: <%= question.correct_option&.body %>
+          </p>
         <% end %>
       </li>
     <% end %>
@@ -50,16 +52,18 @@
     <% if passed %>
       <% if (nxt = @lesson.next_lesson) %>
         <%= link_to "Next lesson →", course_lesson_path(@course, nxt),
-              class: "rounded-lg bg-indigo-600 text-white text-sm font-medium px-5 py-2.5 hover:bg-indigo-700" %>
+              class: "rounded-xl bg-indigo-600 text-white text-sm font-semibold px-5 py-2.5 hover:bg-indigo-700 transition-colors" %>
       <% else %>
         <%= link_to "Back to course", course_path(@course),
-              class: "rounded-lg bg-indigo-600 text-white text-sm font-medium px-5 py-2.5 hover:bg-indigo-700" %>
+              class: "rounded-xl bg-indigo-600 text-white text-sm font-semibold px-5 py-2.5 hover:bg-indigo-700 transition-colors" %>
       <% end %>
-      <%= link_to "Review lesson", course_lesson_path(@course, @lesson), class: "text-sm text-gray-500 hover:underline" %>
+      <%= link_to "Review lesson", course_lesson_path(@course, @lesson),
+            class: "text-sm text-slate-500 dark:text-slate-400 hover:underline" %>
     <% else %>
       <%= link_to "Try again", course_lesson_quiz_path(@course, @lesson),
-            class: "rounded-lg bg-indigo-600 text-white text-sm font-medium px-5 py-2.5 hover:bg-indigo-700" %>
-      <%= link_to "Back to lesson", course_lesson_path(@course, @lesson), class: "text-sm text-gray-500 hover:underline" %>
+            class: "rounded-xl bg-indigo-600 text-white text-sm font-semibold px-5 py-2.5 hover:bg-indigo-700 transition-colors" %>
+      <%= link_to "Back to lesson", course_lesson_path(@course, @lesson),
+            class: "text-sm text-slate-500 dark:text-slate-400 hover:underline" %>
     <% end %>
   </div>
 </div>

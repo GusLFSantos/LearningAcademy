@@ -4,36 +4,36 @@
   <header class="flex items-end justify-between gap-4 mb-8">
     <div>
       <h1 class="text-3xl font-bold tracking-tight">My Progress</h1>
-      <p class="text-gray-500 mt-1">Signed in as <span class="font-medium text-gray-900"><%= @user.name %></span></p>
+      <p class="text-slate-500 dark:text-slate-400 mt-1">
+        Signed in as <span class="font-medium text-slate-900 dark:text-slate-100"><%= @user.name %></span>
+      </p>
     </div>
     <div class="text-right">
-      <div class="text-2xl font-bold text-indigo-600"><%= humane_duration(@total_time) %></div>
-      <div class="text-xs text-gray-400 uppercase tracking-wide">Total learning time</div>
+      <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400"><%= humane_duration(@total_time) %></div>
+      <div class="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wide">Total learning time</div>
     </div>
   </header>
 
-  <!-- Badges -->
   <section class="mb-10">
     <h2 class="text-xl font-semibold mb-3">Badges</h2>
     <% if @badge_awards.any? %>
       <ul class="grid gap-4 sm:grid-cols-3">
         <% @badge_awards.each do |award| %>
-          <li class="bg-white rounded-2xl border border-gray-200 p-5 text-center">
+          <li class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 text-center hover:shadow-md transition-shadow">
             <div class="text-4xl mb-2"><%= award.badge.icon.presence || "🏅" %></div>
             <div class="font-semibold"><%= award.badge.name %></div>
-            <div class="text-xs text-gray-400 mt-1"><%= award.badge.course.title %></div>
-            <div class="text-xs text-gray-400">Earned <%= award.awarded_at.to_date.to_fs(:long) %></div>
+            <div class="text-xs text-slate-400 dark:text-slate-500 mt-1"><%= award.badge.course.title %></div>
+            <div class="text-xs text-slate-400 dark:text-slate-500">Earned <%= award.awarded_at.to_date.to_fs(:long) %></div>
           </li>
         <% end %>
       </ul>
     <% else %>
-      <div class="bg-white rounded-2xl border border-dashed border-gray-300 p-8 text-center text-gray-500">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 p-8 text-center text-slate-500 dark:text-slate-400">
         No badges yet — complete a course to earn one.
       </div>
     <% end %>
   </section>
 
-  <!-- Enrolled courses -->
   <section>
     <h2 class="text-xl font-semibold mb-3">My Courses</h2>
     <% if @enrollments.any? %>
@@ -41,15 +41,15 @@
         <% @enrollments.each do |enrollment| %>
           <% course = enrollment.course %>
           <% progress = course.progress_for(@user) %>
-          <li class="bg-white rounded-2xl border border-gray-200 p-5">
+          <li class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
             <div class="flex items-start justify-between gap-3 mb-3">
               <h3 class="font-semibold">
-                <%= link_to course.title, course_path(course), class: "hover:text-indigo-600" %>
+                <%= link_to course.title, course_path(course), class: "hover:text-indigo-600 dark:hover:text-indigo-400" %>
               </h3>
               <%= render "courses/status_badge", status: progress.status %>
             </div>
             <%= render "courses/progress_bar", course: course, progress: progress %>
-            <div class="mt-3 flex items-center gap-4 text-xs text-gray-400">
+            <div class="mt-3 flex items-center gap-4 text-xs text-slate-400 dark:text-slate-500">
               <span>🕒 <%= humane_duration(progress.time_spent_seconds) %> spent</span>
               <span>⏱️ ≈ <%= progress.estimated_minutes %> min total</span>
             </div>
@@ -57,9 +57,9 @@
         <% end %>
       </ul>
     <% else %>
-      <div class="bg-white rounded-2xl border border-dashed border-gray-300 p-8 text-center text-gray-500">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 p-8 text-center text-slate-500 dark:text-slate-400">
         You haven't enrolled in any courses yet.
-        <%= link_to "Browse the catalog", courses_path, class: "text-indigo-600 hover:underline" %>.
+        <%= link_to "Browse the catalog", courses_path, class: "text-indigo-600 dark:text-indigo-400 hover:underline" %>.
       </div>
     <% end %>
   </section>

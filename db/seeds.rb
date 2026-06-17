@@ -9,9 +9,9 @@
 # Learners (no auth yet — the app resolves a current_user from these)
 # ---------------------------------------------------------------------------
 [
-  ["Demo Learner", "demo@learningacademy.test"],
-  ["Ada Lovelace", "ada@learningacademy.test"],
-  ["Grace Hopper", "grace@learningacademy.test"]
+  [ "Demo Learner", "demo@learningacademy.test" ],
+  [ "Ada Lovelace", "ada@learningacademy.test" ],
+  [ "Grace Hopper", "grace@learningacademy.test" ]
 ].each do |name, email|
   User.find_or_create_by!(email: email) { |u| u.name = name }
 end
@@ -153,25 +153,25 @@ courses = [
       {
         slug: "variables-and-types", title: "Variables and Types", minutes: 8, body: ruby_variables,
         questions: [
-          ["Which symbol assigns a value in Ruby?", [["=", true], ["==", false], ["=>", false]]],
-          ["Everything in Ruby is a(n)…", [["object", true], ["pointer", false], ["primitive", false]]],
-          ["How do you interpolate in a double-quoted string?", [['#{}', true], ["${}", false], ["%{}", false]]]
+          [ "Which symbol assigns a value in Ruby?", [ [ "=", true ], [ "==", false ], [ "=>", false ] ] ],
+          [ "Everything in Ruby is a(n)…", [ [ "object", true ], [ "pointer", false ], [ "primitive", false ] ] ],
+          [ "How do you interpolate in a double-quoted string?", [ [ '#{}', true ], [ "${}", false ], [ "%{}", false ] ] ]
         ]
       },
       {
         slug: "methods-and-blocks", title: "Methods and Blocks", minutes: 10, body: ruby_methods,
         questions: [
-          ["Which keyword defines a method?", [["def", true], ["func", false], ["method", false]]],
-          ["What runs the block passed to a method?", [["yield", true], ["return", false], ["call_block", false]]],
-          ["Blocks are passed using…", [["{ } or do/end", true], ["[ ]", false], ["< >", false]]]
+          [ "Which keyword defines a method?", [ [ "def", true ], [ "func", false ], [ "method", false ] ] ],
+          [ "What runs the block passed to a method?", [ [ "yield", true ], [ "return", false ], [ "call_block", false ] ] ],
+          [ "Blocks are passed using…", [ [ "{ } or do/end", true ], [ "[ ]", false ], [ "< >", false ] ] ]
         ]
       },
       {
         slug: "collections", title: "Collections", minutes: 9, body: ruby_collections,
         questions: [
-          ["Which stores ordered values?", [["Array", true], ["Hash", false], ["Symbol", false]]],
-          ["What does scores[:grace] do?", [["reads a Hash by key", true], ["reads an Array by index", false], ["defines a method", false]]],
-          ["Which transforms each element?", [["map", true], ["push", false], ["length", false]]]
+          [ "Which stores ordered values?", [ [ "Array", true ], [ "Hash", false ], [ "Symbol", false ] ] ],
+          [ "What does scores[:grace] do?", [ [ "reads a Hash by key", true ], [ "reads an Array by index", false ], [ "defines a method", false ] ] ],
+          [ "Which transforms each element?", [ [ "map", true ], [ "push", false ], [ "length", false ] ] ]
         ]
       }
     ]
@@ -186,25 +186,25 @@ courses = [
       {
         slug: "what-is-git", title: "What is Git?", minutes: 6, body: git_what,
         questions: [
-          ["Git is a … version control system.", [["distributed", true], ["centralized", false], ["manual", false]]],
-          ["Which command shows the current state?", [["git status", true], ["git list", false], ["git show-all", false]]],
-          ["What moves files to staging?", [["git add", true], ["git commit", false], ["git push", false]]]
+          [ "Git is a … version control system.", [ [ "distributed", true ], [ "centralized", false ], [ "manual", false ] ] ],
+          [ "Which command shows the current state?", [ [ "git status", true ], [ "git list", false ], [ "git show-all", false ] ] ],
+          [ "What moves files to staging?", [ [ "git add", true ], [ "git commit", false ], [ "git push", false ] ] ]
         ]
       },
       {
         slug: "commits-and-branches", title: "Commits and Branches", minutes: 12, body: git_commits,
         questions: [
-          ["A commit is best described as a…", [["snapshot", true], ["backup server", false], ["remote", false]]],
-          ["Which creates and switches to a branch?", [["git checkout -b", true], ["git branch --delete", false], ["git merge", false]]],
-          ["A branch is a movable pointer to a…", [["commit", true], ["file", false], ["remote", false]]]
+          [ "A commit is best described as a…", [ [ "snapshot", true ], [ "backup server", false ], [ "remote", false ] ] ],
+          [ "Which creates and switches to a branch?", [ [ "git checkout -b", true ], [ "git branch --delete", false ], [ "git merge", false ] ] ],
+          [ "A branch is a movable pointer to a…", [ [ "commit", true ], [ "file", false ], [ "remote", false ] ] ]
         ]
       },
       {
         slug: "remotes-and-pushing", title: "Remotes and Pushing", minutes: 8, body: git_remotes,
         questions: [
-          ["A remote is a … copy of your repo.", [["shared", true], ["temporary", false], ["compressed", false]]],
-          ["The default remote is conventionally named…", [["origin", true], ["main", false], ["server", false]]],
-          ["Which uploads local commits?", [["git push", true], ["git pull", false], ["git fetch", false]]]
+          [ "A remote is a … copy of your repo.", [ [ "shared", true ], [ "temporary", false ], [ "compressed", false ] ] ],
+          [ "The default remote is conventionally named…", [ [ "origin", true ], [ "main", false ], [ "server", false ] ] ],
+          [ "Which uploads local commits?", [ [ "git push", true ], [ "git pull", false ], [ "git fetch", false ] ] ]
         ]
       }
     ]

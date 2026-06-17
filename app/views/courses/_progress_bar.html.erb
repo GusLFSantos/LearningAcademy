@@ -5,12 +5,12 @@
   Wrapped in a dom_id'd container so a Turbo Stream can re-render it live.
 %>
 <div id="<%= dom_id(course, :progress) %>" class="space-y-1">
-  <div class="flex items-center justify-between text-xs text-gray-500">
+  <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
     <span><%= progress.completed %> / <%= progress.total %> lessons</span>
     <span><%= progress.percent %>%</span>
   </div>
-  <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-    <div class="bg-indigo-600 h-2 rounded-full transition-all duration-500"
+  <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+    <div class="bg-indigo-600 dark:bg-indigo-500 h-2 rounded-full transition-all duration-500"
          style="width: <%= progress.percent %>%"></div>
   </div>
 </div>

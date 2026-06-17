@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @courses = Course.published.ordered
@@ -55,7 +55,7 @@ class CoursesController < ApplicationController
   def course_params
     params.require(:course).permit(
       :title, :slug, :summary, :description, :position, :published,
-      badge_attributes: [:id, :name, :icon, :description, :_destroy]
+      badge_attributes: [ :id, :name, :icon, :description, :_destroy ]
     )
   end
 end

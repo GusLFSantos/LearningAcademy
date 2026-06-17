@@ -11,11 +11,11 @@ Rails.application.routes.draw do
   post "markdown_preview", to: "markdown_previews#create"
 
   resources :courses do
-    resource :enrollment, only: [:create, :destroy]
+    resource :enrollment, only: [ :create, :destroy ]
     resources :lessons do
       resources :time_logs, only: :create, controller: "lesson_time_logs"
-      resource :quiz, only: [:show, :edit, :update] do
-        resources :attempts, only: [:create, :show], controller: "quiz_attempts"
+      resource :quiz, only: [ :show, :edit, :update ] do
+        resources :attempts, only: [ :create, :show ], controller: "quiz_attempts"
       end
     end
   end
