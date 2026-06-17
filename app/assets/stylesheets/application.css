@@ -4,7 +4,7 @@
  *
  * Contents:
  *   1. .markdown-body  — typographic styling for rendered lesson/course Markdown
- *   2. .highlight      — Rouge code-block syntax highlighting (GitHub-light)
+ *   2. .highlight      — Rouge code-block syntax highlighting (GitHub-light / dark)
  *   3. .mermaid        — diagram container
  */
 
@@ -43,8 +43,31 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* Dark mode overrides for markdown */
+.dark .markdown-body {
+  color: #cbd5e1;
+}
+.dark .markdown-body h1,
+.dark .markdown-body h2,
+.dark .markdown-body h3 {
+  color: #f1f5f9;
+}
+.dark .markdown-body a { color: #818cf8; }
+.dark .markdown-body blockquote {
+  border-left-color: #475569;
+  color: #94a3b8;
+}
+.dark .markdown-body hr { border-top-color: #334155; }
+.dark .markdown-body th,
+.dark .markdown-body td { border-color: #334155; }
+.dark .markdown-body th { background: #1e293b; }
+.dark .markdown-body :not(.highlight) > code {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
 /* ------------------------------------------------------------------ */
-/* 2. Code blocks (Rouge)                                              */
+/* 2. Code blocks (Rouge) — GitHub-light + dark                       */
 /* ------------------------------------------------------------------ */
 .highlight {
   background: #f6f8fa;
@@ -76,6 +99,30 @@
 .highlight .err { color: #b31d28; background: #ffeef0; }
 .highlight .gd { color: #b31d28; background: #ffeef0; }
 .highlight .gi { color: #22863a; background: #f0fff4; }
+
+/* Dark mode code blocks */
+.dark .highlight {
+  background: #0d1117;
+  border-color: #30363d;
+}
+.dark .highlight code { color: #e6edf3; }
+.dark .highlight .c, .dark .highlight .c1, .dark .highlight .cm, .dark .highlight .cs, .dark .highlight .cp { color: #8b949e; }
+.dark .highlight .k, .dark .highlight .kc, .dark .highlight .kd, .dark .highlight .kn,
+.dark .highlight .kp, .dark .highlight .kr, .dark .highlight .kt { color: #ff7b72; }
+.dark .highlight .o, .dark .highlight .ow { color: #ff7b72; }
+.dark .highlight .s, .dark .highlight .s1, .dark .highlight .s2, .dark .highlight .sb,
+.dark .highlight .sc, .dark .highlight .sd, .dark .highlight .se, .dark .highlight .sh,
+.dark .highlight .si, .dark .highlight .sx, .dark .highlight .sr, .dark .highlight .ss { color: #a5d6ff; }
+.dark .highlight .m, .dark .highlight .mi, .dark .highlight .mf, .dark .highlight .mo,
+.dark .highlight .mh, .dark .highlight .mb, .dark .highlight .il { color: #79c0ff; }
+.dark .highlight .nf, .dark .highlight .na, .dark .highlight .nc, .dark .highlight .nn { color: #d2a8ff; }
+.dark .highlight .no, .dark .highlight .nb, .dark .highlight .bp { color: #79c0ff; }
+.dark .highlight .nt { color: #7ee787; }
+.dark .highlight .nv, .dark .highlight .vi, .dark .highlight .vg, .dark .highlight .vc { color: #ffa657; }
+.dark .highlight .p { color: #e6edf3; }
+.dark .highlight .err { color: #ffa198; background: #3c1c1c; }
+.dark .highlight .gd { color: #ffa198; background: #3c1c1c; }
+.dark .highlight .gi { color: #7ee787; background: #1c3c1c; }
 
 /* ------------------------------------------------------------------ */
 /* 3. Mermaid diagrams                                                 */
